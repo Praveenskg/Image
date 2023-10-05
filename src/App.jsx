@@ -61,11 +61,11 @@ const App = () => {
 
   return (
     <>
-      <h1 className=" text-3xl md:text-4xl   shadow-blue-200 lg:text-5xl text-center font-bold text-dark ">
-       Image Search
+      <h1 className=" text-3xl md:text-4xl m-1 shadow-blue-200 lg:text-5xl text-center font-bold text-dark ">
+        Image Search
       </h1>
       <form
-        className="w-full max-w-5xl  mx-auto rounded-xl p-12 "
+        className="w-full max-w-5xl  mx-auto rounded-xl p-5 "
         onSubmit={handleSearch}
       >
         <div className="my-5 flex">
@@ -80,7 +80,7 @@ const App = () => {
             type="submit"
             className="bg-blue-500 text-white font-bold py-3 px-6 rounded mx-3 hover:bg-teal-400"
           >
-            Search 
+            Search
           </button>
         </div>
       </form>
