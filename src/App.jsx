@@ -1,8 +1,28 @@
-import { useRef, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Loader from "./Loader";
+import { AiOutlineClose } from "react-icons/ai";
+import { useRef, useState, useEffect, useCallback } from "react";
+
 const API_URL = "https://api.unsplash.com/search/photos";
 const IMAGES_PER_PAGE = 24;
+
+const Popup = ({ imageUrl, altDescription, onClose }) => (
+  <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75">
+    <div className="max-w-full sm:max-w-3xl max-h-full overflow-auto bg-white p-8 rounded-md">
+      <div className="flex justify-end">
+        <AiOutlineClose
+          className="text-3xl cursor-pointer hover:text-gray-500"
+          onClick={onClose}
+        />
+      </div>
+      <img
+        src={imageUrl}
+        alt={altDescription}
+        className="w-full h-auto rounded"
+      />
+    </div>
+  </div>
+);
 
 const App = () => {
   const searchInput = useRef(null);
@@ -10,6 +30,7 @@ const App = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const categories = [
     "man",
@@ -61,12 +82,18 @@ const App = () => {
     event.preventDefault();
     resetSearch();
   };
-
   const handleSelection = (selection) => {
     if (searchInput.current) {
       searchInput.current.value = selection;
       resetSearch();
     }
+  };
+  const openPopup = (image) => {
+    setSelectedImage(image);
+  };
+
+  const closePopup = () => {
+    setSelectedImage(null);
   };
 
   return (
@@ -115,6 +142,7 @@ const App = () => {
               <div
                 key={index}
                 className="relative overflow-hidden group cursor-pointer rounded-xl bg-white p-3 shadow-lg hover:shadow-xl"
+                onClick={() => openPopup(image)}
               >
                 <img
                   src={image.urls.small}
@@ -124,6 +152,13 @@ const App = () => {
               </div>
             ))}
           </div>
+          {selectedImage && (
+            <Popup
+              imageUrl={selectedImage.urls.full}
+              altDescription={selectedImage.alt_description}
+              onClose={closePopup}
+            />
+          )}
           <div className="flex justify-center mb-3">
             {page > 1 && (
               <button
