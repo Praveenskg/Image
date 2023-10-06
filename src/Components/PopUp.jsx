@@ -4,7 +4,7 @@ import React from "react";
 const Popup = ({ imageUrl, altDescription, onClose }) => {
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = imageUrl;
+    link.href = imageUrl.replace("w=400", "w=full"); // Change "w=400" to the appropriate size parameter
     link.download = altDescription || "image";
     document.body.appendChild(link);
     link.click();
