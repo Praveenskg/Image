@@ -1,12 +1,6 @@
 import React from "react";
 
-const SearchForm = ({
-  onSubmit,
-  searchInput,
-  handleSearch,
-  categories,
-  handleSelection,
-}) => (
+const SearchForm = ({ onSubmit, searchInput, categories, handleSelection }) => (
   <form className="w-full max-w-5xl mx-auto rounded-xl p-5" onSubmit={onSubmit}>
     <div className="my-5 flex">
       <input
